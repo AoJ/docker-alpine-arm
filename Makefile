@@ -2,8 +2,8 @@
 # make alpine-arm docker image for raspberry pi
 #
 
-RELEASE = edge
-IMAGE = easypi/alpine-arm
+RELEASE = 3.5
+IMAGE = aooj/alpine-arm
 
 rootfs.tar.xz: mkimage-alpine.sh
 	ARCH=armhf ./mkimage-alpine.sh -r $(RELEASE) -s
@@ -11,7 +11,7 @@ rootfs.tar.xz: mkimage-alpine.sh
 mkimage-alpine.sh:
 	curl -sSLO https://github.com/docker/docker/raw/master/contrib/mkimage-alpine.sh
 	sed -i -r -e '/trap /s@@chmod 0755 $$TMP $$ROOTFS; &@' \
-	          -e '/docker import/s@alpine:\$$REL@easypi/alpine-arm:$${REL#v}@' \
+	          -e '/docker import/s@alpine:\$$REL@aooj/alpine-arm:$${REL#v}@' \
 	          -e '/docker (tag|run)/d' mkimage-alpine.sh
 	chmod +x mkimage-alpine.sh
 
